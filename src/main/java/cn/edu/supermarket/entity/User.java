@@ -4,15 +4,26 @@ public class User {
     private int userid;
     private int type;
     private String username;
+    private String userpass;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userid=" + userid +
+                ", type=" + type +
+                ", username='" + username + '\'' +
+                ", userpass='" + userpass + '\'' +
+                '}';
+    }
 
     public User() {
     }
 
-    public User(int userid, int type, String username) {
+    public User(int userid, int type, String username, String userpass) {
         this.userid = userid;
         this.type = type;
-
         this.username = username;
+        this.userpass = userpass;
     }
 
     public int getType() {
@@ -39,12 +50,12 @@ public class User {
         this.username = username;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userid=" + userid +
-                ", type=" + type +
-                ", username='" + username + '\'' +
-                '}';
+
+    public String getUserpass() {
+        return userpass;
+    }
+
+    public void setUserpass(String userpass) {
+        this.userpass = userpass;
     }
 }

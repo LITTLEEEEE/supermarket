@@ -14,4 +14,28 @@ public class UserServiceImpl implements UserService {
     public User logincheck(String username, String userpass) {
         return(userDao.logincheck(username, userpass));
     }
+
+    @Override
+    public int register(User user) {
+        if(null == user) {
+            return 0;
+        }
+        return userDao.addUser(user) > 0 ? 1 : 0;
+    }
+
+    @Override
+    public boolean isNameExists(String name) {
+        int count = userDao.nameCheck(name) ;
+        return count > 0 ? true : false ;
+    }
+
+    @Override
+    public User geUserInfo(Integer userid) {
+        return userDao.geUserInfo(userid);
+    }
+
+    @Override
+    public int updatepwd(String pwd, String username) {
+        return userDao.updatepwd(pwd, username);
+    }
 }

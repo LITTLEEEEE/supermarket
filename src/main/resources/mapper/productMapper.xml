@@ -64,4 +64,6 @@
         <result column="out_date" property="date"/>
         <result column="out_reason" property="reason"/>
     </resultMap>
+
+
 </mapper>

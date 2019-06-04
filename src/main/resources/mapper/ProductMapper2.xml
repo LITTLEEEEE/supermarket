@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.supermarket.dao.ProductDao2">
+    <sql id="base">
+        select * from product
+    </sql>
+
+     <select id="getProduct" resultType="Product">
+        <include refid="base"></include>
+        <where>
+            <if test="null != nameKey">
+                <bind name="key" value="'%'+nameKey+'%'"/>
+                and pname like #{key}
+            </if>
+            <if test="null != typeId">
+                and tid=#{typeId}
+            </if>
+            <if test="minPrice==null and maxPrice != null">
+                and price &lt; #{maxPrice}
+            </if>
+            <if test="minPrice!=null and maxPrice == null">
+                and price &gt; #{minPrice}
+            </if>
+            <if test="minPrice != null and maxPrice != null">
+                and price between #{minPrice} and #{maxPrice}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

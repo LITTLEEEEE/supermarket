@@ -7,8 +7,9 @@ public class userServiceImplTest {
     UserDao userDao ;
     @Test
     public void test(){
-    System.out.print(userDao.logincheck("pyh","123"));
-
+        java.sql.Date ctime = new java.sql.Date(System.currentTimeMillis());
+        System.out.println(ctime);
+        System.out.print(System.currentTimeMillis());
     }
 
 }

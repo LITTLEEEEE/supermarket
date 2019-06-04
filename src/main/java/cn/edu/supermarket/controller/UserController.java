@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,6 @@ public class UserController {
     @RequestMapping("login")
     @ResponseBody
     public Page logincheck(@RequestParam("username")String username,@RequestParam("userpass")String userpass){
-        System.out.print("d");
         User user = userService.logincheck(username, userpass);
         Page page = new Page();
         if(user==null){
@@ -36,6 +36,7 @@ public class UserController {
             data.put("userid",user.getUserid());
             page = new Page(i,"登陆成功",data);
         }
+
         return page;
     }
     @RequestMapping("hello")
@@ -43,4 +44,6 @@ public class UserController {
     String hello(@RequestParam("id")int id){
         return("hello");
     }
+
 }
+

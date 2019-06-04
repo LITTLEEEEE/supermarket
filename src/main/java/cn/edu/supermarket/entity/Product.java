@@ -2,7 +2,8 @@ package cn.edu.supermarket.entity;
 
 public class Product {
     private int pid;
-    private Type type;
+    private int typeid;
+    private String typename;
     private int totalcount;
     private String pname;
     private double price;
@@ -12,9 +13,10 @@ public class Product {
     public Product() {
     }
 
-    public Product(int pid, Type type, int totalcount, String pname, double price, String intro, String img_url) {
+    public Product(int pid, int typeid, String typename, int totalcount, String pname, double price, String intro, String img_url) {
         this.pid = pid;
-        this.type = type;
+        this.typeid = typeid;
+        this.typename = typename;
         this.totalcount = totalcount;
         this.pname = pname;
         this.price = price;
@@ -30,12 +32,20 @@ public class Product {
         this.pid = pid;
     }
 
-    public Type getType() {
-        return type;
+    public int getTypeid() {
+        return typeid;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setTypeid(int typeid) {
+        this.typeid = typeid;
+    }
+
+    public String getTypename() {
+        return typename;
+    }
+
+    public void setTypename(String typename) {
+        this.typename = typename;
     }
 
     public int getTotalcount() {
@@ -82,7 +92,8 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "pid=" + pid +
-                ", type=" + type +
+                ", typeid=" + typeid +
+                ", typename='" + typename + '\'' +
                 ", totalcount=" + totalcount +
                 ", pname='" + pname + '\'' +
                 ", price=" + price +

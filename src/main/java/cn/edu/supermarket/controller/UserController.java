@@ -5,6 +5,7 @@ import cn.edu.supermarket.bean.ReturnByList;
 import cn.edu.supermarket.entity.Product;
 import cn.edu.supermarket.entity.Sell;
 import cn.edu.supermarket.entity.User;
+import cn.edu.supermarket.service.ProductService;
 import cn.edu.supermarket.service.ProductService2;
 import cn.edu.supermarket.service.SellService;
 import cn.edu.supermarket.service.UserService;
@@ -28,7 +29,7 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
-    private ProductService2 productService;
+    private ProductService productService;
     @Autowired
     private SellService sellService;
 

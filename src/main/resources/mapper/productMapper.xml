@@ -65,5 +65,29 @@
         <result column="out_reason" property="reason"/>
     </resultMap>
 
+    <sql id="base">
+        select * from product
+    </sql>
 
+    <select id="getProduct" resultType="Product">
+        <include refid="base"></include>
+        <where>
+            <if test="null != nameKey">
+                <bind name="key" value="'%'+nameKey+'%'"/>
+                and pname like #{key}
+            </if>
+            <if test="null != typeId">
+                and tid=#{typeId}
+            </if>
+            <if test="minPrice==null and maxPrice != null">
+                and price &lt; #{maxPrice}
+            </if>
+            <if test="minPrice!=null and maxPrice == null">
+                and price &gt; #{minPrice}
+            </if>
+            <if test="minPrice != null and maxPrice != null">
+                and price between #{minPrice} and #{maxPrice}
+            </if>
+        </where>
+    </select>
 </mapper>

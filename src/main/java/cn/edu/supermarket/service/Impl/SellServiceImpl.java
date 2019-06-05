@@ -15,6 +15,7 @@ public class SellServiceImpl implements SellService {
 
     @Override
     public int addSell(Sell sell) {
+
         return sellDao.addSell(sell);
     }
 

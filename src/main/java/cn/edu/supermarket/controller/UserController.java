@@ -6,7 +6,6 @@ import cn.edu.supermarket.entity.Product;
 import cn.edu.supermarket.entity.Sell;
 import cn.edu.supermarket.entity.User;
 import cn.edu.supermarket.service.ProductService;
-import cn.edu.supermarket.service.ProductService2;
 import cn.edu.supermarket.service.SellService;
 import cn.edu.supermarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,13 +94,14 @@ public class UserController {
 
     @RequestMapping("/customer/buy")
     @ResponseBody
-    public Page buyProduct(Integer id, Integer count, Double price, Integer userid){
+    public Page buyProduct(Integer id, Integer count, Integer userid){
         Page page = new Page();
         Sell sell = new Sell();
+        Product product = productService.getById(id);
         sell.setPid(id);
         sell.setUid(userid);
         sell.setSell_count(count);
-        sell.setSell_price(price);
+        sell.setSell_price(product.getPrice());
         int a = sellService.addSell(sell);
         int b = productService.sellProduct(id, count);
         if(a>0 && b>0){
@@ -112,28 +112,40 @@ public class UserController {
         }
         return page;
     }
-
+    //User geUserInfo(@Param("uid") Integer userid);
     @RequestMapping("/customer/info")
     @ResponseBody
-    public Page getInfo(Integer userid){
-        Page page = null;
+    public ReturnByList getInfo(Integer userid){
+        ReturnByList returnByList = null;
         User user = userService.geUserInfo(userid);
-        List<Sell> sellList = sellService.getUserSell(userid);
-        System.out.println(sellList);
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        //Product product = productService.getById()
         if(user == null){
-            page = new Page(0, "不存在此用户", null);
-        }
-        else if(sellList.size()==0){
-            page = new Page(0, "此用户暂时还没有购买商品", null);
+            returnByList = new ReturnByList(0, "不存在此用户", null);
+}
+        else {
+                List data = new ArrayList();
+                Map data2 = new HashMap();
+                data2.put("username",user.getUsername());
+                data2.put("password",user.getUserpass());
+                data.add(data2);
+                returnByList = new ReturnByList(1, "查看用户信息成功", data);
+
+                }
+                return returnByList;
+                }
+
+
+    @RequestMapping("/customer/buyrecord")
+    @ResponseBody
+    public ReturnByList getBuyrecord(Integer userid){
+        ReturnByList returnByList = null;
+        List<Sell> sellList = sellService.getUserSell(userid);
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+
+        if(sellList.size()==0){
+            returnByList = new ReturnByList(0, "此用户暂时还没有购买商品", null);
         }
         else {
-            Map data = new HashMap();
-            List buyrecord = new ArrayList();
-            data.put("userid",user.getUserid());
-            data.put("username",user.getUsername());
-            data.put("password",user.getUserpass());
+            List data = new ArrayList();
             for(Sell sell:sellList){
                 Map sellInfo = new HashMap();
                 Product product = productService.getById(sell.getPid());
@@ -142,21 +154,19 @@ public class UserController {
                 sellInfo.put("count",sell.getSell_count());
                 sellInfo.put("price",sell.getSell_price());
                 sellInfo.put("date",sdf.format(sell.getSell_date()));
-                buyrecord.add(sellInfo);
+                data.add(sellInfo);
 
             }
-            data.put("buyrecord",buyrecord);
-            page = new Page(1, "查看信息成功", data);
-
+            returnByList = new ReturnByList(1, "查看信息成功", data);
         }
-        return page;
+        return returnByList;
     }
 
     @RequestMapping("/customer/updateinfo")
     @ResponseBody
-    public Page updateInfo(String username, String password){
+    public Page updateInfo(Integer userid, String password){
         Page page = null;
-        return userService.updatepwd(password,username)>0 ? new Page(1, "修改成功", null):new Page(0, "修改失败", null);
+        return userService.updatepwd(password,userid)>0 ? new Page(1, "修改成功", null):new Page(0, "修改失败", null);
     }
 
     @RequestMapping("foodsearch")

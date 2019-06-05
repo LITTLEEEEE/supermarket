@@ -24,5 +24,5 @@ public interface UserService {
     /**
      * 修改密码
      */
-    int updatepwd(String pwd, String username);
+    int updatepwd(String pwd, Integer userid);
 }

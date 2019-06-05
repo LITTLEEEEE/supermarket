@@ -32,6 +32,6 @@ public interface UserDao {
     /**
      * 修改密码
      */
-    @Update("update user SET userpass=#{pwd} where username = #{username}")
-    int updatepwd(@Param("pwd") String pwd, @Param("username") String username);
+    @Update("update user SET userpass=#{pwd} where userid = #{userid}")
+    int updatepwd(@Param("pwd") String pwd, @Param("userid") Integer userid);
 }
